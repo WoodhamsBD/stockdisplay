@@ -15,8 +15,7 @@ class StockInput extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.props.onSubmit(
-      this.state.stockId
+    API.fetchIntra15Min()
     );
   }
 
