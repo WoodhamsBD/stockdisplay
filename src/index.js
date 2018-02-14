@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './Components/App';
 import registerServiceWorker from './registerServiceWorker';
 
-
+// CSS 
 require('./index.css');
 
 // App display start point
