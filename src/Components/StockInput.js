@@ -5,37 +5,40 @@ class StockInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      symbol: '',
+      stockData: {}
     }
   
 
   //Function Binding
-  // this.submitSymbol = this.submitSymbol.bind(this);
   this.handleChange = this.handleChange.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
 
   // End Constructor
   }
 
+  // Methods Start
+  
+  // captures each character has it is entered in the form and updates each time
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({symbol: event.target.value});
   };
 
+  // fires when the form is submitted
   handleSubmit(event) {
-    alert(this.state.value);
     event.preventDefault();
+
+    // API Call with symbol from field - update state.stockData with respose
+    API.fetchIntra15Min(this.state.symbol)
+    .then(function(data) {
+      this.setState(function() {
+        return { 
+          stockData: data
+        }
+      })
+    }
+    .bind(this));
   };
-
-
-  // Form submit to trigger API call with entered Stock symbol
-  // submitSymbol(symbol) {
-  //   this.setState(function() {
-  //     return {
-  //       stockId: symbol
-  //     }
-  //   })
-
-  //   console.log("Symbol: " + symbol);
 
   //   API.fetchIntra15Min(symbol)
   //   .then(function(data) {
@@ -45,7 +48,8 @@ class StockInput extends React.Component {
   //   }.bind(this));
   // };
 
-  // Component Display
+
+  // Display
   render() {
     return (
       <div className="stockInput">
@@ -56,7 +60,7 @@ class StockInput extends React.Component {
             placeholder='Stock to Search'
             type='text'
             autoComplete='off'
-            value={this.state.value}
+            value={this.state.symbol}
             onChange={this.handleChange}
           ></input>
           </label>
